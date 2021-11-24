@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://taylorswift134.xyz</id>
     <title>爱玩单机的小泰勒</title>
-    <updated>2021-11-24T13:52:30.045Z</updated>
+    <updated>2021-11-24T14:07:10.546Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://taylorswift134.xyz"/>
     <link rel="self" href="https://taylorswift134.xyz/atom.xml"/>
@@ -10,6 +10,27 @@
     <logo>https://taylorswift134.xyz/images/avatar.png</logo>
     <icon>https://taylorswift134.xyz/favicon.ico</icon>
     <rights>All rights reserved 2021, 爱玩单机的小泰勒</rights>
+    <entry>
+        <title type="html"><![CDATA[解压教程]]></title>
+        <id>https://taylorswift134.xyz/post/jie-ya-jiao-cheng/</id>
+        <link href="https://taylorswift134.xyz/post/jie-ya-jiao-cheng/">
+        </link>
+        <updated>2021-11-24T14:01:34.000Z</updated>
+        <content type="html"><![CDATA[<p>游戏安装前必须关掉杀毒软件，QQ管家或者360安全卫士以保证游戏正常解压。<br>
+本站所有资源均为7-Zip打包 请使用7-Zip或Bandizip解压</p>
+<ul>
+<li>
+<p>1.请确保所有下载文件均在同一文件夹内，路径和游戏文件夹名字不能出现中文</p>
+</li>
+<li>
+<p>2.选中 XXX.7z.001 右键解压到当前文件夹</p>
+</li>
+<li>
+<p>3.所有游戏一定要使用管理员权限打开</p>
+</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[进站必看]]></title>
         <id>https://taylorswift134.xyz/post/jin-zhan-bi-kan/</id>
