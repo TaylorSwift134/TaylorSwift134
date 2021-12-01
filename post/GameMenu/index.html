@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="专注单机5000年">
 <meta name="theme-color" content="#000000">
-<title>TaylorBoy</title>
+<title>游戏目录 | TaylorBoy</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1638323712411">
 <link rel="stylesheet" href="/media/css/pisces.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -41,6 +41,8 @@
 
 
 
+  <meta name="description" content="游戏目录" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -186,7 +188,7 @@
           
           
             
-              <li class="nav-item nav-item-active">
+              <li class="nav-item ">
                 <a href="/friends/" target="_self">
                   
                     <i class="fa fa-address-book"></i> 友链
@@ -232,11 +234,26 @@
   </div>
   <div class="main-continer">
     
-      <div
-        class="section-layout pisces ">
-        <div class="section-layout-wrapper">
-          <div id="sidebarMeta" class="sidebar">
-    
+    <div
+      class="section-layout pisces ">
+      <div class="section-layout-wrapper">
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active language" data-lan="index">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item language" data-lan="preview">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body pisces" id="sidebar_body">
+        
+          
+            
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -266,54 +283,1764 @@
 
 
 </div>
+          
+        
+      </div>
+    </div>
+  
 </div>
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'pisces';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    jQuery.Velocity(hideElement, 'stop');
+    jQuery.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        jQuery.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
       }
-    });
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
   }
-  </script>
-            <div class="section-box pisces box-shadow-wrapper">
-              <section class="friends-section bg-color slide-down-in">
-                <div class="firends-box" align="center">
-                  <h1 class="firends-title" itemprop="name headline">
-                    友链
-                  </h1>
-                  
-                    
-                        
-                </div>
-                <hr>
-                <div style="text-align:center">
-                  <span class="with-love">
-                    <i class="fa fa-heart"></i>
-                  </span>
-                  <span class="language" data-lan="leave-message">如需添加友链,可以在关于中找到我的联系方式告知我</span>
-                  <span class="with-love">
-                    <i class="fa fa-heart"></i>
-                  </span>
-                </div>
-                <hr>
-                <div class="friends-note">
-                  <p><strong class="language" data-lan="format">友链格式：</strong></p>
-                  <ul>
-                    <li><span class="language" data-lan="site-name">网站名称：</span>TaylorBoy</li>
-                    <li><span class="language" data-lan="site-link">网站地址：</span><a href="https://taylorswift134.xyz" data-pjax-state="">https://taylorswift134.xyz</a></li>
-                    <li><span class="language" data-lan="site-desc">网站描述：</span>专注单机5000年</li>
-                    <li><span class="language" data-lan="site-img">网站头像：</span>
-                      <a href="https://taylorswift134.xyz/images/avatar.png">https://taylorswift134.xyz/images/avatar.png</a>
-                    </li>
-                  </ul>
-                </div>
-                
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <section class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://taylorswift134.xyz/post/GameMenu/"> 游戏目录 </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span class="language" data-lan="publish">发布于</span>
+      <span class="publish-time" data-t="2021-12-01 09:42:41">2021-12-01</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span
+        >37<span class="language" data-lan="minute"
+          >分钟</span
+        ></span
+      >
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span
+        >10152<span class="pc-show language" data-lan="words"
+          >字数</span
+        ></span
+      >
+    </span>
+    
+  </div>
+</section>
+
+            <div class="post-body next-md-body" id="post_body">
+              <ul>
+<li>破晓传说 破晓传奇 Tales of Arise</li>
+<li>全面战争幕府将军2</li>
+<li>极限竞速：地平线4：终极版+全车辆解锁存档</li>
+<li>最新版本文明6全DLC+修改器</li>
+<li>三国志14威力加强版套装：数字豪华版</li>
+<li>都市天际线+9x9方格-解锁81格MOD</li>
+<li>钢铁雄心4可单机可Steam联机</li>
+<li>钢铁雄心4v1.10.4</li>
+<li>钢铁雄心3+为了祖国+光荣时刻</li>
+<li>都市天际线</li>
+<li>太吾绘卷</li>
+<li>石油大亨</li>
+<li>全面战争：三国</li>
+<li>英雄连1+远东战场</li>
+<li>英雄连2</li>
+<li>英雄连：勇气传说</li>
+<li>真三国无双8</li>
+<li>真三国无双7：猛将传</li>
+<li>真三国无双7：帝国</li>
+<li>真三国无双6：猛将传</li>
+<li>真三国无双5</li>
+<li>无主之地：年度版</li>
+<li>无主之地2</li>
+<li>无主之地3</li>
+<li>无主之地：前传</li>
+<li>无主之地：传说</li>
+<li>赏金奇兵1：西部通缉令</li>
+<li>赏金奇兵2：赫多兰朵</li>
+<li>赏金奇兵3</li>
+<li>监狱建筑师</li>
+<li>我来自江湖</li>
+<li>崩溃大陆</li>
+<li>只狼影逝二度</li>
+<li>牧场物语</li>
+<li>消逝的光芒：信徒增强版可局域网联机可Steam联机</li>
+<li>欧陆风云4可Steam联机</li>
+<li>腐烂国度2巨霸版主宰版</li>
+<li>杀戮空间2</li>
+<li>宝可梦剑盾</li>
+<li>文明时代2</li>
+<li>文明3</li>
+<li>文明4</li>
+<li>文明5超级大国最终版</li>
+<li>文明6</li>
+<li>泰坦之旅：亚特兰蒂斯10周年纪念版</li>
+<li>泰坦之旅：不朽王座</li>
+<li>街头霸王X铁拳</li>
+<li>街头霸王4</li>
+<li>街头霸王5冠军版</li>
+<li>奥日与鬼火意志</li>
+<li>奥日与暗黑森林：终极版</li>
+<li>荒野大镖客：救赎1+原版模式+僵尸模式</li>
+<li>荒野大镖客：救赎2</li>
+<li>正当防卫1英文版</li>
+<li>正当防卫2</li>
+<li>正当防卫3</li>
+<li>正当防卫4：完整终极版</li>
+<li>刺客信条：英灵殿</li>
+<li>刺客信条：奥德赛</li>
+<li>刺客信条：大革命</li>
+<li>刺客信条：叛变</li>
+<li>刺客信条4：黑旗</li>
+<li>刺客信条：启示录</li>
+<li>刺客信条：兄弟会</li>
+<li>刺客信条1英文版</li>
+<li>刺客信条2</li>
+<li>刺客信条3HD+解放HD</li>
+<li>刺客信条6：枭雄</li>
+<li>刺客信条7：起源</li>
+<li>刺客信条编年史：俄罗斯</li>
+<li>刺客信条编年史：印度</li>
+<li>刺客信条编年史：中国</li>
+<li>火影忍者：究极风暴1</li>
+<li>火影忍者：究极风暴2</li>
+<li>火影忍者：究极风暴3</li>
+<li>火影忍者：究极风暴4</li>
+<li>火影忍者：究极风暴风暴革命</li>
+<li>火影忍者博人传忍者先锋</li>
+<li>地平线：零之曙光</li>
+<li>虐杀原形2</li>
+<li>虐杀原形1</li>
+<li>帝国：全面战争</li>
+<li>传送门骑士</li>
+<li>狂热运输2</li>
+<li>异星工厂</li>
+<li>永恒空间</li>
+<li>神界：原罪1</li>
+<li>神界：原罪2</li>
+<li>打造世界</li>
+<li>底特律变人</li>
+<li>海贼王：世界探索者</li>
+<li>海贼王：燃烧之血</li>
+<li>海贼王无尽世界R</li>
+<li>战争之人：突击小队1</li>
+<li>战争之人：突击小队2</li>
+<li>战争之人：突击小队2冷战</li>
+<li>战争之人：负罪英雄</li>
+<li>战争之人：赤潮</li>
+<li>战争之人：越南</li>
+<li>鬼泣HD英文版1+2+3</li>
+<li>鬼泣4</li>
+<li>鬼泣4：特别版</li>
+<li>DMC鬼泣</li>
+<li>鬼泣5</li>
+<li>火炬之光1</li>
+<li>火炬之光2</li>
+<li>火炬之光3</li>
+<li>求生之路1</li>
+<li>求生之路2</li>
+<li>海岛大亨5</li>
+<li>海岛大亨6</li>
+<li>巫师1：导演剪辑加强版</li>
+<li>巫师2：国王刺客加强版</li>
+<li>巫师3：狂猎年度版</li>
+<li>模拟农场2017</li>
+<li>模拟农场2019</li>
+<li>四海兄弟：黑手党1最终版</li>
+<li>四海兄弟：黑手党2最终版</li>
+<li>四海兄弟：黑手党3最终版</li>
+<li>黑手党：黑帮之城</li>
+<li>游乐园建造师</li>
+<li>死亡细胞</li>
+<li>脱逃者2 逃脱者2</li>
+<li>模拟人生4</li>
+<li>王国保卫战</li>
+<li>王国保卫战：前线</li>
+<li>王国保卫战：起源</li>
+<li>王国保卫战：复仇</li>
+<li>孤岛惊魂：新曙光</li>
+<li>孤岛惊魂：原始杀戮</li>
+<li>孤岛惊魂2</li>
+<li>孤岛惊魂3</li>
+<li>孤岛惊魂3：血龙</li>
+<li>孤岛惊魂4</li>
+<li>孤岛惊魂5：黄金版</li>
+<li>死亡搁浅</li>
+<li>蒙特祖玛的宝藏4</li>
+<li>御姐玫瑰起源</li>
+<li>无人深空</li>
+<li>无人深空可steam联机</li>
+<li>乞丐模拟器</li>
+<li>丧尸围城1</li>
+<li>丧尸围城2：绝密档案</li>
+<li>丧尸围城3</li>
+<li>丧尸围城3：天启版</li>
+<li>丧尸围城4</li>
+<li>GTA5整合MOD版</li>
+<li>GTA5纯净版</li>
+<li>漫威复仇者联盟</li>
+<li>泰拉瑞亚</li>
+<li>怪物猎人世界</li>
+<li>怪物猎人世界：冰原</li>
+<li>金融帝国2金融帝国实验室</li>
+<li>超多街机游戏3682个 街机模拟器</li>
+<li>卡普空街机全集</li>
+<li>开天眼</li>
+<li>街机游戏1251个 街机模拟器</li>
+<li>棒球小子 忍者棒球+拳皇97</li>
+<li>超级大满贯2</li>
+<li>上古卷轴5+原版+绅士版</li>
+<li>上古卷轴5：天际</li>
+<li>上古卷轴5：天际重制版</li>
+<li>铁拳6英文版</li>
+<li>铁拳7</li>
+<li>收购战争</li>
+<li>街机大亨</li>
+<li>永恒之柱2：死火</li>
+<li>最终幻想1：像素复刻版</li>
+<li>最终幻想2：像素复刻版</li>
+<li>最终幻想3：像素复刻版</li>
+<li>最终幻想3</li>
+<li>最终幻想4</li>
+<li>最终幻想5</li>
+<li>最终幻想6</li>
+<li>最终幻想7</li>
+<li>最终幻想8：重制版</li>
+<li>最终幻想9</li>
+<li>最终幻想10+10-2</li>
+<li>最终幻想12：黄道时代</li>
+<li>最终幻想13-1</li>
+<li>最终幻想13-2</li>
+<li>最终幻想13：雷霆归来</li>
+<li>最终幻想15</li>
+<li>最终幻想：零式HD</li>
+<li>最终幻想：世界</li>
+<li>最终幻想：纷争NT</li>
+<li>火爆狂飙：天堂</li>
+<li>合金装备崛起：复仇</li>
+<li>合金装备5：原爆点</li>
+<li>合金装备5：幻痛</li>
+<li>古墓丽影9</li>
+<li>古墓丽影：崛起</li>
+<li>古墓丽影：暗影</li>
+<li>全面战争传奇：特洛伊</li>
+<li>放置勇者远征</li>
+<li>巫师之昆特牌：王权的陨落</li>
+<li>孤岛危机：重置版</li>
+<li>孤岛危机2</li>
+<li>孤岛危机3</li>
+<li>孤岛危机：弹头</li>
+<li>无双大蛇Z</li>
+<li>无双大蛇3终极版</li>
+<li>海贼无双3</li>
+<li>海贼无双4</li>
+<li>国土防线</li>
+<li>国土防线2：革命</li>
+<li>茶杯头</li>
+<li>暗黑破坏神3：夺魂之镰英文版</li>
+<li>暗黑破坏神2：重制版</li>
+<li>暗黑破坏神2：毁灭之王</li>
+<li>暗黑破坏神3</li>
+<li>战地1</li>
+<li>战地：叛逆连队2</li>
+<li>战地3</li>
+<li>战地4</li>
+<li>战地5</li>
+<li>战地：硬仗</li>
+<li>骑马与砍杀2霸主领主v1.6.1</li>
+<li>骑马与砍杀2霸主领主v1.5.10</li>
+<li>幽灵行者</li>
+<li>噬血代码</li>
+<li>真人快打11</li>
+<li>Steam月圆之夜解锁全DLC补丁</li>
+<li>侍魂晓</li>
+<li>极品飞车9：最高通辑</li>
+<li>极品飞车10：卡本峡谷</li>
+<li>极品飞车14：热力追踪</li>
+<li>极品飞车15：变速2</li>
+<li>极品飞车16：亡命狂飙</li>
+<li>极品飞车17：最高通缉 限定版</li>
+<li>极品飞车18：宿敌</li>
+<li>极品飞车20：复仇</li>
+<li>极品飞车21：热度</li>
+<li>罗马之子</li>
+<li>热血无赖：终极版</li>
+<li>狙击手：幽灵战士1</li>
+<li>狙击手：幽灵战士2</li>
+<li>狙击手：幽灵战士3</li>
+<li>狙击手：幽灵战士契约</li>
+<li>狙击手：幽灵战士契约2</li>
+<li>丛林地狱 绿色地狱</li>
+<li>星球大战：陨落的武士团</li>
+<li>星球大战：战争前线2</li>
+<li>FIFA12</li>
+<li>FIFA13</li>
+<li>FIFA14</li>
+<li>FIFA14：巴西世界杯 英文版</li>
+<li>FIFA15</li>
+<li>FIFA17</li>
+<li>FIFA18</li>
+<li>FIFA19</li>
+<li>冥河：暗影大师</li>
+<li>冥河：暗黑碎片</li>
+<li>霓虹深渊</li>
+<li>双星物语2加强版</li>
+<li>双星物语阿尔杰斯的冒险</li>
+<li>死亡岛：终极版</li>
+<li>死亡岛：激流终极版</li>
+<li>死亡岛：复仇</li>
+<li>拳皇13</li>
+<li>拳皇14</li>
+<li>黑道圣徒：杀出地狱</li>
+<li>黑道圣徒2</li>
+<li>黑道圣徒3</li>
+<li>黑道圣徒3：重制版</li>
+<li>黑道圣徒4：世纪版</li>
+<li>孢子：银河大冒险</li>
+<li>波西亚时光</li>
+<li>地痞街区</li>
+<li>魔兽争霸3：冰封王座+混乱之治</li>
+<li>魔兽争霸3：邪魔复苏</li>
+<li>魔兽争霸3：涅槃重生</li>
+<li>魔兽争霸3：八族争霸</li>
+<li>魔兽争霸2：黑潮</li>
+<li>魔兽争霸：氏族之王</li>
+<li>魔兽争霸：人类与兽人</li>
+<li>行会3</li>
+<li>传说之下</li>
+<li>武装突袭3</li>
+<li>双点医院</li>
+<li>寒霜朋克 冰汽时代</li>
+<li>荣誉骑士</li>
+<li>星际争霸1</li>
+<li>星际争霸2：虚空之遗</li>
+<li>行尸走肉第一季</li>
+<li>行尸走肉第二季</li>
+<li>行尸走肉第三季</li>
+<li>行尸走肉：400天</li>
+<li>行尸走肉：生存本能</li>
+<li>行尸走肉：米琼恩</li>
+<li>行尸走肉：新边界</li>
+<li>创世理想乡</li>
+<li>口袋妖怪XY太阳红宝石蓝宝石终极版合集</li>
+<li>轩辕剑7</li>
+<li>轩辕剑叁外传天之痕</li>
+<li>七日杀</li>
+<li>这是我的战争</li>
+<li>人类黎明</li>
+<li>放逐之城</li>
+<li>数码宝贝物语：网路侦探骇客追忆</li>
+<li>专业模拟飞行11</li>
+<li>乐高漫威超级英雄2</li>
+<li>纪元2205</li>
+<li>纪元1800</li>
+<li>纪元1701</li>
+<li>纪元1404+威尼斯</li>
+<li>淘金热</li>
+<li>恶灵附身1</li>
+<li>恶灵附身2</li>
+<li>龙珠：超宇宙1</li>
+<li>龙珠：超宇宙2</li>
+<li>喵斯快跑</li>
+<li>噬神者：解放重生</li>
+<li>噬神者2：狂怒解放</li>
+<li>噬神者3</li>
+<li>中土世界：暗影魔多</li>
+<li>中土世界：战争之影</li>
+<li>异星探险家</li>
+<li>异星探险家Steam联机版</li>
+<li>汽车修理工模拟2015</li>
+<li>汽车修理工模拟2021</li>
+<li>汽车修理工模拟2018</li>
+<li>马克思佩恩1英文版</li>
+<li>马克思佩恩2</li>
+<li>马克思佩恩3</li>
+<li>港诡实录</li>
+<li>Jump大乱斗 Jump Force</li>
+<li>孤山速降</li>
+<li>云端朋克Cloudpunk</li>
+<li>罪有应得</li>
+<li>女神异闻录5</li>
+<li>女神异闻录5乱战：魅影攻手</li>
+<li>女神异闻录4：黄金版</li>
+<li>战锤混沌祸根</li>
+<li>战锤：西格玛时代风暴之地</li>
+<li>杀手2：黄金版</li>
+<li>杀手3</li>
+<li>杀手6</li>
+<li>杀手5：赦免</li>
+<li>杀手13重制版</li>
+<li>黑暗之魂1</li>
+<li>黑暗之魂2</li>
+<li>黑暗之魂3</li>
+<li>黑暗之魂：重置版</li>
+<li>开拓者的财富</li>
+<li>碧之轨迹</li>
+<li>零之轨迹</li>
+<li>农民王朝</li>
+<li>英雄传说：闪之轨迹1</li>
+<li>英雄传说：闪之轨迹2</li>
+<li>英雄传说：闪之轨迹3</li>
+<li>英雄传说：闪之轨迹4</li>
+<li>英雄传说：闪之轨迹1改</li>
+<li>英雄传说：闪之轨迹2改</li>
+<li>英雄传说创之轨迹</li>
+<li>十字路酒馆</li>
+<li>守墓人</li>
+<li>圣女之歌零1</li>
+<li>圣女之歌零2</li>
+<li>影子战术将军之刃</li>
+<li>罪恶装备：未知次元-征兆</li>
+<li>勇者斗恶龙：英雄1</li>
+<li>勇者斗恶龙：英雄2</li>
+<li>勇者斗恶龙11：追寻逝去的时光</li>
+<li>勇者斗恶龙：创世小玩家2</li>
+<li>勇者斗恶龙11s：模拟器版</li>
+<li>不详的预感：赛博朋克故事</li>
+<li>进击的巨人：自由之翼</li>
+<li>进击的巨人2</li>
+<li>秋叶原之旅2</li>
+<li>全面战争：战锤1</li>
+<li>全面战争：战锤2</li>
+<li>森林</li>
+<li>森林可Steam联机</li>
+<li>旗帜的传说1</li>
+<li>旗帜的传说2</li>
+<li>旗帜的传说3</li>
+<li>小小大工坊</li>
+<li>战神1+2</li>
+<li>幽浮：奇美拉战队</li>
+<li>天穗之咲稻姬</li>
+<li>灵魂能力6</li>
+<li>地狱潜者</li>
+<li>死亡终局：轮回试炼</li>
+<li>死亡终局：轮回试炼2</li>
+<li>隐形公司</li>
+<li>极限竞速：地平线4</li>
+<li>变形金刚：赛博坦之战</li>
+<li>变形金刚：赛博坦陨落</li>
+<li>变形金刚：毁灭</li>
+<li>撞车嘉年华</li>
+<li>光环：士官长合集最终版</li>
+<li>二之国：白色圣灰的女王</li>
+<li>二之国2：幽灵国度</li>
+<li>侠盗猎车手：圣安地列斯</li>
+<li>侠盗猎车手：罪恶都市</li>
+<li>GTA3 侠盗猎车手3</li>
+<li>GTA4 侠盗猎车手4</li>
+<li>GTA4 侠盗猎车手4：自由城之章</li>
+<li>特技摩托：聚变</li>
+<li>特技摩托：血龙</li>
+<li>钢铁战队</li>
+<li>神奇蜘蛛侠1</li>
+<li>神奇蜘蛛侠2</li>
+<li>蜘蛛侠：破碎维度</li>
+<li>龙珠Z：​卡卡罗特</li>
+<li>玛吉雅</li>
+<li>诸神灰烬：救赎</li>
+<li>吸血鬼</li>
+<li>秘馆疑踪</li>
+<li>中世纪王朝</li>
+<li>战神：夜战</li>
+<li>忍者印记：重制版</li>
+<li>整蛊邻居1</li>
+<li>整蛊邻居2</li>
+<li>整蛊邻居：归来</li>
+<li>幽灵行动4：未来战士</li>
+<li>罗马2：全面战争</li>
+<li>重装机兵4：月光歌姬</li>
+<li>泰坦陨落2</li>
+<li>以撒的结合：重生</li>
+<li>以撒的结合：胎衣</li>
+<li>以撒的结合：忏悔</li>
+<li>废土3</li>
+<li>史莱姆牧场</li>
+<li>最后的篝火</li>
+<li>FC游戏合集 FC经典游戏</li>
+<li>激斗四驱车</li>
+<li>骑马与砍杀：战团</li>
+<li>海底大猎杀</li>
+<li>看门狗1</li>
+<li>看门狗2</li>
+<li>我的世界只有石头的世界2</li>
+<li>三国志1</li>
+<li>三国志2</li>
+<li>三国志3</li>
+<li>三国志4</li>
+<li>三国志5</li>
+<li>三国志6</li>
+<li>三国志7</li>
+<li>三国志8</li>
+<li>三国志9+威力加强版</li>
+<li>三国志10威力加强版</li>
+<li>三国志11威力加强版</li>
+<li>三国志12威力加强版</li>
+<li>三国志13威力加强版</li>
+<li>三国志14</li>
+<li>三国志14威力加强版套装数字豪华版</li>
+<li>边缘世界 环世界</li>
+<li>阿玛拉王国：惩罚</li>
+<li>阿玛拉王国：惩罚重制版</li>
+<li>瘟疫公司</li>
+<li>房产达人</li>
+<li>足球小将：新秀崛起</li>
+<li>星露谷物语+MOD+攻略+修改器+BGM</li>
+<li>星露谷物语</li>
+<li>方舟：生存进化</li>
+<li>方舟：生存进化全DLC</li>
+<li>嗜血印</li>
+<li>中国式家长</li>
+<li>中国式家长：女儿版</li>
+<li>帝国时代1+罗马复兴</li>
+<li>帝国时代2高清版+征服者入侵+失落帝国+非洲王国</li>
+<li>帝国时代3白金版+亞洲王朝+群酋爭霸</li>
+<li>帝国时代：终极版</li>
+<li>帝国时代3：决定版</li>
+<li>帝国时代2：决定版</li>
+<li>群星 Stellaris</li>
+<li>大富翁10</li>
+<li>不思议的皇冠</li>
+<li>部落与弯刀</li>
+<li>怪物火车</li>
+<li>僵尸毁灭工程</li>
+<li>狙击精英</li>
+<li>狙击精英2：重制版</li>
+<li>狙击精英3</li>
+<li>狙击精英4</li>
+<li>魔神少女2</li>
+<li>殖民地围攻</li>
+<li>装甲军团2</li>
+<li>使命召唤1</li>
+<li>使命召唤2</li>
+<li>使命召唤4现代战争重制版</li>
+<li>使命召唤5世界大战</li>
+<li>使命召唤6现代战争2</li>
+<li>使命召唤6：现代战争2重制版</li>
+<li>使命召唤7黑色行动</li>
+<li>使命召唤8现代战争3</li>
+<li>使命召唤9黑色行动2</li>
+<li>使命召唤10幽灵</li>
+<li>使命召唤11高级战争</li>
+<li>使命召唤12黑色行动3</li>
+<li>使命召唤13：无限战争</li>
+<li>使命召唤14二战</li>
+<li>剑刃遗产：预兆</li>
+<li>三国志汉末霸业</li>
+<li>归家异途</li>
+<li>初创公司</li>
+<li>剑齿虎船长和魔法钻石</li>
+<li>熊掌出击</li>
+<li>油管主播生活</li>
+<li>展翅翱翔</li>
+<li>仁王1</li>
+<li>仁王2可单机可Steam联机</li>
+<li>模拟宇宙 Space Engine</li>
+<li>盟军敢死队2：高清重制版</li>
+<li>盟军敢死队+深入敌后+使命召唤</li>
+<li>生化危机0：高清重制版</li>
+<li>生化危机HD：重制版</li>
+<li>生化危机2：重制版</li>
+<li>生化危机3：重制版</li>
+<li>生化危机3：复仇女神+佣兵模式</li>
+<li>生化危机4</li>
+<li>生化危机5</li>
+<li>生化危机6</li>
+<li>生化危机7</li>
+<li>生化危机：启示录2</li>
+<li>生化危机：启示录1</li>
+<li>生化危机：保护小伞队</li>
+<li>生化危机8：村庄 豪华版</li>
+<li>暴雨</li>
+<li>模拟城市5：未来之城</li>
+<li>超凡双生</li>
+<li>慢慢长夜</li>
+<li>天外世界</li>
+<li>空洞骑士</li>
+<li>四海旅人</li>
+<li>如龙0</li>
+<li>如龙：极1</li>
+<li>如龙：极2</li>
+<li>如龙3：重制版</li>
+<li>如龙4：重制版</li>
+<li>如龙5：重制版</li>
+<li>如龙6：生命之诗</li>
+<li>如龙7：光与暗的去向</li>
+<li>尼尔：机械纪元</li>
+<li>荒野八侠</li>
+<li>先祖遗产</li>
+<li>通勤地铁战</li>
+<li>人类：一败涂地</li>
+<li>失落城堡</li>
+<li>仙剑奇侠传1</li>
+<li>仙剑奇侠传2</li>
+<li>仙剑奇侠传3</li>
+<li>仙剑奇侠传3外传：问情篇</li>
+<li>仙剑奇侠传3之千年缘</li>
+<li>仙剑奇侠传4</li>
+<li>仙剑奇侠传5</li>
+<li>仙剑奇侠传5前传</li>
+<li>仙剑奇侠传6</li>
+<li>仙剑奇侠传7</li>
+<li>新仙剑奇侠传XP</li>
+<li>仙剑客栈</li>
+<li>仙剑时空转：时空决</li>
+<li>无尽太空2 Endless Space 2</li>
+<li>饥荒：单机版</li>
+<li>饥荒：联机版</li>
+<li>意想不到的冒险</li>
+<li>侠客风云传</li>
+<li>侠客风云传：外传</li>
+<li>瘟疫传说：无罪</li>
+<li>北境之地</li>
+<li>北境之地可Steam联机版</li>
+<li>剑士 Kenshi</li>
+<li>欧洲卡车模拟2</li>
+<li>模拟火车2020</li>
+<li>实况足球2018</li>
+<li>实况足球2019</li>
+<li>实况足球2021</li>
+<li>足球经理2020</li>
+<li>足球经理2019</li>
+<li>足球经理2018</li>
+<li>足球经理2021</li>
+<li>地牢无双</li>
+<li>不义联盟2传奇版</li>
+<li>孤胆枪手2：重装上阵</li>
+<li>孤胆枪手2：传奇</li>
+<li>动物森友会</li>
+<li>余烬</li>
+<li>蜀山幻剑录</li>
+<li>空穴</li>
+<li>哈迪斯 Hades</li>
+<li>杀戮尖塔</li>
+<li>达芬奇之家1</li>
+<li>达芬奇之家2</li>
+<li>密不可分</li>
+<li>工业崛起</li>
+<li>超越钢铁苍穹</li>
+<li>钢铁雄狮2</li>
+<li>地狱时刻 Hellpoint</li>
+<li>挂机吧勇者</li>
+<li>深海迷航零度之下</li>
+<li>深海迷航美丽的水世界</li>
+<li>生化奇兵1：重制版</li>
+<li>生化奇兵2：重制版</li>
+<li>生化奇兵3：无限</li>
+<li>X4：基石</li>
+<li>创世纪阿尔法一号</li>
+<li>无尽帝国</li>
+<li>弹丸论破1：绝望的高中生</li>
+<li>弹丸论破2：再见绝望的学院</li>
+<li>新弹丸论破v3</li>
+<li>弹丸论破：绝对绝望少女</li>
+<li>了不起的修仙模拟器</li>
+<li>钢铁收割</li>
+<li>塞尔达传说：旷野之息</li>
+<li>塞尔达传说：御天之剑HD 模拟器版</li>
+<li>地下矿工 矿坑之下</li>
+<li>吞食孔明传</li>
+<li>过山车之星</li>
+<li>辐射1</li>
+<li>辐射2</li>
+<li>辐射3</li>
+<li>辐射4</li>
+<li>代号：闯客</li>
+<li>潜渊症</li>
+<li>动物园之星</li>
+<li>英雄萨姆4</li>
+<li>轴心国与同盟国</li>
+<li>岛屿生存者</li>
+<li>电脑装机模拟器</li>
+<li>辐射：新维加斯</li>
+<li>漂移21</li>
+<li>死灵法师归来</li>
+<li>太空乱游</li>
+<li>倒塌 Collapsed</li>
+<li>幸福工厂</li>
+<li>红警 红色警戒95完整版</li>
+<li>红警 红色警戒3：命令与征服</li>
+<li>红警 红色警戒3：世界大战</li>
+<li>红警 红色警戒2：共和国之辉</li>
+<li>红警 红色警戒2：共和国之辉中国版</li>
+<li>红警 红色警戒2+尤里的复仇</li>
+<li>红警 红色警戒1：命令与征服重制版</li>
+<li>红警 红色警戒3：起义时刻</li>
+<li>地下城争夺战</li>
+<li>风暴之海</li>
+<li>火星Z：战术基地防御</li>
+<li>审判：末日生存模拟</li>
+<li>NBA2K13</li>
+<li>NBA2K14</li>
+<li>NBA2K15</li>
+<li>NBA2K16</li>
+<li>NBA2K17</li>
+<li>NBA2K18</li>
+<li>NBA2K19</li>
+<li>NBA2K20</li>
+<li>NBA2K21</li>
+<li>超级冲锋：开箱</li>
+<li>茂林源记</li>
+<li>商店里的另一块砖</li>
+<li>玩命关头：十字路口</li>
+<li>海商王4</li>
+<li>未上锁的房间1+2+3</li>
+<li>异端：缺席的神</li>
+<li>英雄攻城</li>
+<li>雨中冒险1</li>
+<li>雨中冒险2</li>
+<li>远星物语</li>
+<li>大厦管理者</li>
+<li>战斗厨师旅团</li>
+<li>罪恶帝国</li>
+<li>植物大战僵尸3D魔改</li>
+<li>植物大战僵尸1</li>
+<li>植物大战僵尸：95版</li>
+<li>车祸模拟器</li>
+<li>核爆RPG：末日余生</li>
+<li>统一指挥2</li>
+<li>神舞幻想</li>
+<li>众神酒馆</li>
+<li>德军总部2：新巨人</li>
+<li>德军总部：旧血脉</li>
+<li>德军总部：新秩序</li>
+<li>德军总部</li>
+<li>重返德军总部</li>
+<li>苍翼默示录：神观之梦</li>
+<li>苍翼默示录：连续变换 扩展版</li>
+<li>病态：七侍者</li>
+<li>武林群侠传</li>
+<li>克罗诺斯灰烬之前</li>
+<li>112接线员</li>
+<li>蝙蝠侠阿卡姆骑士</li>
+<li>蝙蝠侠阿卡姆疯人院年度版</li>
+<li>埃尔希乔：荒野西部的传说</li>
+<li>恶棍英雄</li>
+<li>王国与城堡</li>
+<li>赛博朋克2077</li>
+<li>风来之西林5：命运塔与命运的骰子</li>
+<li>创业恐慌</li>
+<li>咒语力量3：陨落神明</li>
+<li>修道院：破碎的瓷器</li>
+<li>未来水世界：深海之下</li>
+<li>彼岸花</li>
+<li>苏军游击队1941</li>
+<li>失忆症：重生</li>
+<li>赛道大师</li>
+<li>破门而入</li>
+<li>告诉我为什么</li>
+<li>碧蓝幻想Versus</li>
+<li>龙之纪元起源 龙之纪元觉醒</li>
+<li>猎人野性的呼唤可单机可Steam联机</li>
+<li>月球放松</li>
+<li>凯撒大帝3</li>
+<li>凯撒大帝4</li>
+<li>疯狂运输</li>
+<li>阿尔芭与野生动物的故事</li>
+<li>掘地求升 getting over it</li>
+<li>耻辱1</li>
+<li>耻辱2</li>
+<li>耻辱：界外魔之死</li>
+<li>日落过载</li>
+<li>吸血鬼之殇：起源</li>
+<li>亿万僵尸</li>
+<li>终结者：抵抗</li>
+<li>战国无双：真田丸</li>
+<li>战国无双2</li>
+<li>战国无双4-2</li>
+<li>战国无双5可单机可Steam联机</li>
+<li>超级机器人大战X</li>
+<li>超级机器人大战V</li>
+<li>辐射谷物语</li>
+<li>光明记忆</li>
+<li>奠基</li>
+<li>猫咪斗恶龙1+2</li>
+<li>轨道：模型游戏</li>
+<li>爱丝与卡罗吉的炼金工房：黄昏天空之炼金术士DX</li>
+<li>爱夏的炼金工房：黄昏大地之炼金术士DX</li>
+<li>菲丽丝的炼金工房：不可思议旅的炼金术士DX</li>
+<li>苏菲的炼金工房：不可思议书的炼金术士DX</li>
+<li>托托莉的炼金工房：亚兰德之炼金术士2DX</li>
+<li>夏利的炼金工房：黄昏海洋之炼金术师DX</li>
+<li>露露亚的炼金工房：亚兰德之炼金术士4</li>
+<li>萝乐娜的炼金工房：亚兰德之炼金术士DX</li>
+<li>梅露露的炼金工房：亚兰德之炼金术士3DX</li>
+<li>奈尔可与传说的炼金术士们：新大地之炼金工房</li>
+<li>莉迪与苏瑞的炼金工房：不可思议绘画的炼金术士DX</li>
+<li>龙崖</li>
+<li>吃鸡模拟器</li>
+<li>死亡空间1</li>
+<li>死亡空间2</li>
+<li>死亡空间3</li>
+<li>永恒传说</li>
+<li>形骸骑士</li>
+<li>僵尸部队4：死亡战争</li>
+<li>特殊行动：一线生机</li>
+<li>雨血前传蜃楼</li>
+<li>雨血1迷镇+雨血2烨城</li>
+<li>质量效应1</li>
+<li>质量效应2</li>
+<li>质量效应3</li>
+<li>质量效应：仙女座</li>
+<li>质量效应：传奇版</li>
+<li>猎天使魔女1</li>
+<li>猎天使魔女2</li>
+<li>炽焰帝国：十字军东征</li>
+<li>永恒光辉</li>
+<li>大航海时代1</li>
+<li>大航海时代2</li>
+<li>大航海时代3</li>
+<li>大航海时代4威力加强版</li>
+<li>大航海时代外传</li>
+<li>大航海时代4：威力加强版HD</li>
+<li>死或生5：最后一战</li>
+<li>死或生6</li>
+<li>浅红2</li>
+<li>武林立志传：龙吟剑</li>
+<li>维斯塔利亚传说亡国骑士与星辰巫女</li>
+<li>维斯塔利亚传说席鲁巴比尔西的圣剑外传</li>
+<li>信长之野望13：天道 威力加强版</li>
+<li>信长之野望14：创造+威力加强版</li>
+<li>信长之野望14：创造 战国立志传</li>
+<li>信长之野望15：大志+威力加强版</li>
+<li>古剑奇谭1</li>
+<li>古剑奇谭2</li>
+<li>古剑奇谭3</li>
+<li>东方月神夜</li>
+<li>料理模拟器：烹饪模拟器</li>
+<li>歧路旅人：八方旅人</li>
+<li>三国群英传1+2+3+4+5+6+7</li>
+<li>暗黑血统战神重制版</li>
+<li>暗黑血统2死亡重置版</li>
+<li>暗黑血统3</li>
+<li>暗黑血统创世纪</li>
+<li>幽灵教义</li>
+<li>晶体管</li>
+<li>堡垒</li>
+<li>暴君</li>
+<li>国王的恩赐：黑暗面</li>
+<li>1937特种兵</li>
+<li>勇士之王</li>
+<li>浣花洗剑录</li>
+<li>太极张三丰</li>
+<li>封印：仲裁者之印</li>
+<li>天下霸图1</li>
+<li>桥梁建筑师</li>
+<li>毁灭全人类重制版</li>
+<li>水滴之声：入毒</li>
+<li>秋之回忆1</li>
+<li>秋之回忆2：nd</li>
+<li>秋之回忆3：深步花语之爱</li>
+<li>秋之回忆4：从今以后</li>
+<li>秋之回忆4：从今以后Again</li>
+<li>秋之回忆4：花祭奏鸣曲</li>
+<li>秋之回忆5：中断的胶片</li>
+<li>秋之回忆5：安可</li>
+<li>秋之回忆6：下一篇章</li>
+<li>秋之回忆6：三角波动</li>
+<li>秋之回忆7：打勾勾的记忆</li>
+<li>秋之回忆8：无垢少女</li>
+<li>秋之回忆8：致亲爱的你</li>
+<li>秋之回忆：二重奏</li>
+<li>秋之回忆：雨后+折鹤+想演+卒业</li>
+<li>战争机器5</li>
+<li>三色绘恋</li>
+<li>WILL：美好世界</li>
+<li>博德之门1</li>
+<li>博德之门2</li>
+<li>博德之门3</li>
+<li>错误里程碑2</li>
+<li>东京迷城eX+</li>
+<li>魂之刃</li>
+<li>赛博朋克：酒保行动</li>
+<li>十二刻度的月计时</li>
+<li>一人之下之寻炁迷踪</li>
+<li>墨心</li>
+<li>高考工厂模拟</li>
+<li>石质碎片</li>
+<li>胡闹厨房1：煮糊了1</li>
+<li>胡闹厨房2：煮糊了2</li>
+<li>蓝宝石般的被害妄想少女</li>
+<li>接头</li>
+<li>剑为君舞</li>
+<li>拣爱</li>
+<li>点灯使</li>
+<li>不落城</li>
+<li>单程票</li>
+<li>刀剑神域彼岸游境</li>
+<li>刀剑神域夺命凶弹</li>
+<li>刀剑神域黑衣剑士失落之歌</li>
+<li>刀剑神域虚空断章</li>
+<li>刀剑神域虚空幻界</li>
+<li>加速世界VS刀剑神域千年的黄昏</li>
+<li>小龙咖啡馆</li>
+<li>超时空之轮</li>
+<li>游戏王：决斗者遗产链接进化</li>
+<li>游戏王：决斗者遗产</li>
+<li>天国：拯救</li>
+<li>Superliminal</li>
+<li>亦春秋</li>
+<li>UBOAT</li>
+<li>被感染者</li>
+<li>御侠客</li>
+<li>天命奇御</li>
+<li>鸿源战纪</li>
+<li>小小梦魇</li>
+<li>小小梦魇2：完整版</li>
+<li>面容</li>
+<li>今晚没开</li>
+<li>尘埃1</li>
+<li>尘埃2</li>
+<li>尘埃3</li>
+<li>尘埃4</li>
+<li>尘埃：决战</li>
+<li>尘埃拉力赛1.0</li>
+<li>尘埃拉力赛2.0</li>
+<li>模拟火车世界2020</li>
+<li>地铁最后的曙光回归</li>
+<li>地铁2033重置版</li>
+<li>地铁离去黄金版</li>
+<li>地铁最后的曙光重置版</li>
+<li>阴暗森林</li>
+<li>寂静岭1</li>
+<li>寂静岭2</li>
+<li>寂静岭3</li>
+<li>寂静岭4</li>
+<li>寂静岭5</li>
+<li>寂静岭PT英文版</li>
+<li>复体</li>
+<li>掠食</li>
+<li>紫塞秋风</li>
+<li>史诗战争模拟器</li>
+<li>Haydee1</li>
+<li>Haydee2</li>
+<li>艾维雅之泪</li>
+<li>圣剑传说2重制版</li>
+<li>圣剑传说3重制版</li>
+<li>东方幕华祭</li>
+<li>哆啦A梦大富翁</li>
+<li>浮岛物语</li>
+<li>宇宙沙盘2</li>
+<li>半条命2+第一章+第二章</li>
+<li>侏罗纪世界：进化</li>
+<li>新剑侠传奇</li>
+<li>空战猎鹰</li>
+<li>货运：大洋物流帝国</li>
+<li>纸人1</li>
+<li>纸人2</li>
+<li>艾希</li>
+<li>波斯之夜：沙漠奇迹</li>
+<li>波斯之夜2：月光的面纱</li>
+<li>动物起义战斗模拟器</li>
+<li>还愿</li>
+<li>樱花裁决</li>
+<li>英雄无敌1</li>
+<li>英雄无敌2</li>
+<li>英雄无敌3HD</li>
+<li>英雄无敌4</li>
+<li>英雄无敌5</li>
+<li>英雄无敌6</li>
+<li>英雄无敌7</li>
+<li>点击英雄</li>
+<li>勇敢的心世界大战</li>
+<li>像素黑暗史 Chronicon</li>
+<li>物质世界</li>
+<li>双子座3</li>
+<li>输出牧场</li>
+<li>沙皮克：月球探索</li>
+<li>奇迹一刻</li>
+<li>暖暖村物语</li>
+<li>迷走深空：碎舰师</li>
+<li>超时空方舟</li>
+<li>600秒：深邃教堂</li>
+<li>白色相簿1</li>
+<li>白色相簿2</li>
+<li>白色相簿2FD</li>
+<li>血污：夜之仪式</li>
+<li>夜间城邦</li>
+<li>妖精的尾巴</li>
+<li>天空商人</li>
+<li>人渣 SCUM</li>
+<li>我是皇帝</li>
+<li>孙美琪疑案：第二季</li>
+<li>孙美琪疑案：第三季</li>
+<li>孙美琪疑案：第四季</li>
+<li>死亡之冠</li>
+<li>神枪手大战僵尸</li>
+<li>山</li>
+<li>旅行恋恋</li>
+<li>老陈</li>
+<li>景安区奇案+番外</li>
+<li>桥</li>
+<li>火焰审判</li>
+<li>格利奇之旅</li>
+<li>超级食肉男孩</li>
+<li>流放者柯南：单机版</li>
+<li>流放者柯南：Steam联机版</li>
+<li>螃蟹大战</li>
+<li>莱莎的炼金工房：常暗女王与秘密藏身处</li>
+<li>莱莎的炼金工房2：失落传说与秘密妖精</li>
+<li>异教徒模拟器</li>
+<li>约会大作战：凛绪轮回HD</li>
+<li>殖民大亨</li>
+<li>俄罗斯方块效应</li>
+<li>传送门1+传送门序曲+伽马能量+光圈科学：似曾相识</li>
+<li>传送门2</li>
+<li>燥热：精神失常</li>
+<li>武士零 Katana ZERO</li>
+<li>非常英雄</li>
+<li>恶魔之书</li>
+<li>荣誉勋章：战士</li>
+<li>少林VS武当2</li>
+<li>小骨：英雄杀手</li>
+<li>逃生1 outlast1</li>
+<li>逃生2 outlast2</li>
+<li>与君盟</li>
+<li>原石计划</li>
+<li>影中的你</li>
+<li>云端之约</li>
+<li>死寂之城</li>
+<li>迷雾侦探</li>
+<li>红怪</li>
+<li>传颂之物：给逝者的摇篮曲</li>
+<li>白昼梦之旅</li>
+<li>密室的祭品</li>
+<li>台中国的帝雉少女</li>
+<li>讨鬼传2</li>
+<li>呼吸边缘</li>
+<li>战争游戏：红龙</li>
+<li>情热传说</li>
+<li>彩虹六号</li>
+<li>沉没之城</li>
+<li>克苏鲁的呼唤</li>
+<li>狂怒2</li>
+<li>终点咖啡馆</li>
+<li>皇牌空战7未知领域</li>
+<li>火焰之纹章：IF</li>
+<li>火焰之纹章：觉醒</li>
+<li>火焰之纹章回声：另一位英雄王</li>
+<li>无路之旅</li>
+<li>鬼谷八荒</li>
+<li>戴森球计划</li>
+<li>埃博拉病毒2</li>
+<li>Re：从零开始的异世界生活：虚假的王选候补</li>
+<li>恐怖黎明</li>
+<li>永远不再</li>
+<li>灵媒</li>
+<li>小镇惊魂2</li>
+<li>痛苦地狱</li>
+<li>哞哩的长梦</li>
+<li>全网公敌</li>
+<li>切勿回头</li>
+<li>下潜症</li>
+<li>雨城</li>
+<li>终焉之莉莉骑士寂夜</li>
+<li>侠之道</li>
+<li>我的世界：地下城</li>
+<li>世界汽车拉力锦标赛8</li>
+<li>世界汽车拉力锦标赛9</li>
+<li>破坏领主</li>
+<li>光之子</li>
+<li>工业小镇</li>
+<li>雅皮士精神 Yuppie Psycho</li>
+<li>当铺人生2 Dealers Life 2</li>
+<li>MMORPG大亨2</li>
+<li>Yaga</li>
+<li>餐桌礼仪 TableManners</li>
+<li>双截龙：三部曲</li>
+<li>魔物学园：毕业舞会大作战</li>
+<li>堡垒：火焰之炼</li>
+<li>Nexomon：Extinction</li>
+<li>伏魔记</li>
+<li>音灵 INVAXION</li>
+<li>欺诈之地</li>
+<li>觅长生</li>
+<li>咖啡甜恋</li>
+<li>荒芜工厂</li>
+<li>异域镇魂曲：加强版</li>
+<li>先祖：人类奥德赛</li>
+<li>蔚蓝</li>
+<li>奥秘：蒸汽与魔法</li>
+<li>灰鹰之邪恶元素的神殿</li>
+<li>SD高达G世纪火线纵横</li>
+<li>WWE 2K15</li>
+<li>WWE 2K19</li>
+<li>WWE 2K20</li>
+<li>WWE 2K 殺戮戰場</li>
+<li>60秒差距</li>
+<li>60秒：重制版</li>
+<li>渎神</li>
+<li>卡车人生</li>
+<li>太阁立志传5</li>
+<li>收获日2</li>
+<li>收获日掠夺</li>
+<li>心灵杀手</li>
+<li>心灵杀手：美国噩梦</li>
+<li>细胞分裂5：断罪</li>
+<li>细胞分裂6：黑名单</li>
+<li>风云天下会</li>
+<li>超次元游戏：海王星重生1</li>
+<li>超次元游戏：海王星重生2</li>
+<li>超次元游戏：海王星重生3</li>
+<li>四女神Online</li>
+<li>勇者海王星</li>
+<li>超次元大战海王星VS世嘉主机少女</li>
+<li>新次元游戏：海王星VIIR</li>
+<li>海王星：VVV战机少女</li>
+<li>英灵神殿 Valheim</li>
+<li>完美决策</li>
+<li>低模之战 Polytopia</li>
+<li>烟火</li>
+<li>众神将陨 Gods Will Fall</li>
+<li>日落大道1986</li>
+<li>生存RPG：失落的宝藏</li>
+<li>逃出百慕大</li>
+<li>童话森林</li>
+<li>哔啵岛物语</li>
+<li>Disjunction</li>
+<li>轰炸机小队</li>
+<li>区块链大亨</li>
+<li>松鼠镇的杂货店</li>
+<li>SNK女格斗家大乱斗</li>
+<li>红视：太空突击</li>
+<li>心灵噩梦</li>
+<li>用心组装</li>
+<li>时光之帽 A Hat in Time</li>
+<li>滴答：双人冒险</li>
+<li>TOHU</li>
+<li>KEEPOUT</li>
+<li>Townscaper</li>
+<li>烛火地牢1</li>
+<li>烛火地牢2</li>
+<li>盐和避难所</li>
+<li>乌尔图克：荒凉</li>
+<li>随动回旋镖</li>
+<li>深岩银河</li>
+<li>狼人之末日怒吼：地灵之血</li>
+<li>火车站改造王</li>
+<li>好公司</li>
+<li>爱丽丝与巨人</li>
+<li>信使</li>
+<li>我不是怪物</li>
+<li>危险节奏2</li>
+<li>贪婪地牢 Dungreed</li>
+<li>流星蝴蝶剑</li>
+<li>疯狂游戏大亨1</li>
+<li>疯狂游戏大亨2</li>
+<li>堕落圣杯</li>
+<li>M工业 Mindustry</li>
+<li>YORG.io</li>
+<li>WorldBox</li>
+<li>极速骑行3</li>
+<li>极速骑行4</li>
+<li>旋转轮胎</li>
+<li>旋转轮胎泥泞奔驰</li>
+<li>雪地奔驰</li>
+<li>悬崖帝国</li>
+<li>为了吾王</li>
+<li>少女射击回归初心</li>
+<li>少女射击2</li>
+<li>缺氧</li>
+<li>命运之手1</li>
+<li>命运之手2</li>
+<li>三位一体1</li>
+<li>三位一体2</li>
+<li>三位一体3：权力圣器</li>
+<li>三位一体4：梦魇王子</li>
+<li>迷失天使</li>
+<li>猴子桶战</li>
+<li>奥伯拉丁的回归</li>
+<li>凤凰点：周年版</li>
+<li>星际勇士</li>
+<li>小偷模拟器</li>
+<li>纳赫鲁博王国地下城：混沌护符</li>
+<li>火星电力行业</li>
+<li>地狱之刃：塞娜的献祭</li>
+<li>超级马里奥3D世界+狂怒世界</li>
+<li>暴战机甲兵</li>
+<li>变形记</li>
+<li>大将军：罗马</li>
+<li>幻想乡萃夜祭</li>
+<li>九张羊皮纸</li>
+<li>涅克罗蒙达下巢战争</li>
+<li>医院计划</li>
+<li>20XX</li>
+<li>30XX</li>
+<li>Becastled</li>
+<li>疯狂之门</li>
+<li>彼岸画廊</li>
+<li>餐瘾地城</li>
+<li>电竞俱乐部</li>
+<li>维克多弗兰</li>
+<li>三国杀</li>
+<li>沿着陨石：游戏书 X 战略游戏</li>
+<li>夜嫁</li>
+<li>电竞传奇</li>
+<li>速限</li>
+<li>神鸭特攻</li>
+<li>渡神纪：芬尼斯崛起</li>
+<li>全明星水果赛车</li>
+<li>迷你国家</li>
+<li>距离男主自杀还剩七天</li>
+<li>回门 Way Back Home</li>
+<li>侠盗猎马人</li>
+<li>尼布甲尼撒王</li>
+<li>Mutropolis</li>
+<li>INSIDE</li>
+<li>层层梦境</li>
+<li>喋血街头2 夺命邮差2</li>
+<li>喋血街头3 夺命邮差3</li>
+<li>喋血街头4 夺命邮差4</li>
+<li>繁星路</li>
+<li>苦痛之环</li>
+<li>铁路帝国</li>
+<li>贪婪的豌豆2</li>
+<li>神秘酒店</li>
+<li>殖民者</li>
+<li>有一个梦 There Was A Dream</li>
+<li>地牢围攻3</li>
+<li>NAYU的冒险</li>
+<li>艾迪芬奇的记忆</li>
+<li>反叛公司：局势升级</li>
+<li>光荣使命军用升级版</li>
+<li>坎巴拉太空计划</li>
+<li>地下地牢</li>
+<li>云端王国</li>
+<li>无间冥寺</li>
+<li>太平洋胜利</li>
+<li>痞子英雄：泰索斯遗迹 Rogue Heroes</li>
+<li>阿加雷斯特战记：甜蜜新婚</li>
+<li>阿加雷斯特战记2</li>
+<li>幻想地球</li>
+<li>灭火先锋 FireProject</li>
+<li>卢米之地 Lumiland</li>
+<li>学习工厂 Learning Factory</li>
+<li>死亡西部 West of Dead</li>
+<li>逆风停航 Windbound</li>
+<li>江湖余生</li>
+<li>宅人传说</li>
+<li>影子游戏星城行动</li>
+<li>异世界酒场六重奏：第一卷</li>
+<li>异世界酒场六重奏：第二卷</li>
+<li>异世界酒场六重奏：第三卷</li>
+<li>闪客快打合集</li>
+<li>奇妙探险队</li>
+<li>奇妙探险队2</li>
+<li>魔界边缘</li>
+<li>玛吉雅X Magia X</li>
+<li>九州：商旅</li>
+<li>幻想将军2</li>
+<li>高殿战记 GordianQuest</li>
+<li>学术界：学校模拟器</li>
+<li>天使帝国1</li>
+<li>天使帝国2</li>
+<li>天使帝国3</li>
+<li>天使帝国4</li>
+<li>非常普通的鹿 DEEEER Simulator</li>
+<li>河洛群侠传</li>
+<li>少女文明 Girls Civilization</li>
+<li>神话时代：扩展版</li>
+<li>丸霸无双</li>
+<li>游戏开发的二三事</li>
+<li>自由人：游击战争</li>
+<li>西游记之大圣归来</li>
+<li>献给亲爱的你</li>
+<li>校长模拟器</li>
+<li>新星漂移</li>
+<li>胡闹搬家</li>
+<li>战场女武神4</li>
+<li>战场女武神</li>
+<li>流氓星救援</li>
+<li>Hot Brass</li>
+<li>岸边 TheShore</li>
+<li>阿克拉什：传承</li>
+<li>寻找天堂 Finding Paradise</li>
+<li>变形金刚：战场</li>
+<li>炽热白雪 Blazing Snow</li>
+<li>堕落之王：年度版</li>
+<li>伐木工王朝</li>
+<li>高跷男踩竹马 Stilt Fella</li>
+<li>化身侦探</li>
+<li>荒野传说</li>
+<li>激荡海渊</li>
+<li>僵尸模拟器</li>
+<li>节奏医生</li>
+<li>凯瑟琳：经典版</li>
+<li>凯旋堡 Fort Triumph</li>
+<li>南极洲88</li>
+<li>热血格斗：大激战SP</li>
+<li>神格</li>
+<li>史蒂芬宇宙：光明坦途</li>
+<li>去月球 To the Moon</li>
+<li>死亡公园1</li>
+<li>死亡公园2</li>
+<li>我亲爱的陛下</li>
+<li>我想要创造 I Wanna Maker</li>
+<li>席德梅尔：星际战舰</li>
+<li>小房间故事：小镇之谜 Tiny Room</li>
+<li>星际拓荒</li>
+<li>星球流浪者 Planet Nomads</li>
+<li>亚瑟王：骑士传说</li>
+<li>真实世界赛车</li>
+<li>终极提督：航海时代</li>
+<li>甲A风云+中国球王</li>
+<li>深度觉醒</li>
+<li>ALTF4</li>
+<li>漂流品</li>
+<li>Foregone</li>
+<li>节奏快打</li>
+<li>神明在上</li>
+<li>秘密舞会</li>
+<li>Scrapnaut</li>
+<li>Maquette</li>
+<li>Sir Lovelot</li>
+<li>铲子骑士：无主珍宝</li>
+<li>大理石时代：重制版</li>
+<li>第九个黎明3</li>
+<li>防守战术 Lod Tactics</li>
+<li>风之熔炉</li>
+<li>格林机枪</li>
+<li>怪物卡车1</li>
+<li>怪物卡车2</li>
+<li>画中世界 Gorogoa</li>
+<li>高卢战争：战斗模拟器</li>
+<li>昏迷2：恶毒姐妹</li>
+<li>僵尸世界大战</li>
+<li>风之旅人</li>
+<li>脑叶公司：怪物管理模拟</li>
+<li>莎莉的脸</li>
+<li>咒术师学院</li>
+<li>团战经理</li>
+<li>全面战争模拟器</li>
+<li>木筏求生</li>
+<li>黑相集：棉兰号</li>
+<li>黑相集：希望渺茫</li>
+<li>海上神枪手</li>
+<li>僚机计划 ProjectWingman</li>
+<li>加密货币：披荆斩棘</li>
+<li>克莱尔</li>
+<li>快照喵 Shutter Nyang</li>
+<li>窃贼横行</li>
+<li>赛车计划3</li>
+<li>丧尸狂潮：无限挑战</li>
+<li>术士计划</li>
+<li>无尽的回忆</li>
+<li>折纸相会 A Fold Apart</li>
+<li>字符勇敢猫咪</li>
+<li>揍击派对</li>
+<li>循环英雄</li>
+<li>全面战争：阿提拉</li>
+<li>拿破仑：全面战争</li>
+<li>Everhood</li>
+<li>机场CEO</li>
+<li>牧场模拟器</li>
+<li>兽角骑士 Horned Knight</li>
+<li>我家我做主</li>
+<li>巡回赛超级明星</li>
+<li>要塞：军阀之战</li>
+<li>遗忘之地</li>
+<li>战锤40K：格雷迪厄斯 遗迹之战</li>
+<li>战锤40k战区</li>
+<li>重生旅人</li>
+<li>冰风谷：增强版</li>
+<li>极度恐慌2</li>
+<li>极度恐慌3</li>
+<li>不是地下城 Dungeon No Dungeon</li>
+<li>绯夜传奇 狂战传说 Tales of Berseria</li>
+<li>逆转裁判三部曲</li>
+<li>宇宙大拍扁</li>
+<li>薄暮传说：终极版</li>
+<li>旁观者1</li>
+<li>旁观者2</li>
+<li>朗克历险记 Re冒险人生</li>
+<li>气球塔防6</li>
+<li>桑塔与七神</li>
+<li>视线之外</li>
+<li>金庸无双2</li>
+<li>超越欲望</li>
+<li>铁旅</li>
+<li>星际叛乱者</li>
+<li>野火</li>
+<li>花 Flower</li>
+<li>氰化欢乐秀 末日通行证</li>
+<li>龙霸三合会</li>
+<li>乐高：侏罗纪世界</li>
+<li>古老城市</li>
+<li>风之天使 Wind Angel</li>
+<li>忍者神龟：曼哈顿突变体</li>
+<li>忍者神龟：冲出阴暗</li>
+<li>租房达人：序幕篇章</li>
+<li>妖精剑士F FairyFencerF</li>
+<li>瓦尔迪斯传说：深渊之城</li>
+<li>地狱后生存</li>
+<li>Size Matters</li>
+<li>崛起3：泰坦之王增强版</li>
+<li>洛克人11 Mega Man 11</li>
+<li>洛克人Zero ZX遗产 Mega Man Zero ZX Legacy Collection</li>
+<li>洛克人X传奇合集1 Mega Man X Legacy Collection1</li>
+<li>洛克人X传奇合集2 Mega Man X Legacy Collection2</li>
+<li>尸变纪元2</li>
+<li>神田川jet girls Kandagawa Jet Girls</li>
+<li>血根 Bloodroots</li>
+<li>帕斯卡契约：终极版</li>
+<li>死神来了</li>
+<li>DAYZ</li>
+<li>超级兔子人 Super Bunny Man</li>
+<li>黑色洛城</li>
+<li>甜蜜之家1</li>
+<li>甜蜜之家2</li>
+<li>火星求生</li>
+<li>拆弹模拟器</li>
+<li>替身 Ghost in the pool</li>
+<li>艾波与欧波 ibbobb</li>
+<li>Towaga：暗影之中</li>
+<li>RWBY：戮兽之蚀</li>
+<li>淹没之城</li>
+<li>拳皇97：全球对决</li>
+<li>抗日大刀队：日军总部</li>
+<li>这里没有游戏：错误维度</li>
+<li>异形工厂 shapez.io</li>
+<li>战斗砖块剧场</li>
+<li>影子武士1</li>
+<li>影子武士2</li>
+<li>先发制人：末日终结</li>
+<li>奇盗团：大劫案</li>
+<li>Tin Kuna</li>
+<li>僵尸斯塔布斯</li>
+<li>Potentia</li>
+<li>碧蓝航线：交汇的航迹</li>
+<li>帝国分裂</li>
+<li>朗科天空</li>
+<li>末日准备狂</li>
+<li>全面战争幕府将军2</li>
+<li>拳皇98</li>
+<li>不动就会死</li>
+<li>Sizeable</li>
+<li>终极缠绕2</li>
+<li>祭典：异教徒王国</li>
+<li>疯狂实验：密室逃脱</li>
+<li>堆叠逐箱</li>
+<li>地下城：黑暗领主</li>
+<li>黑水绮谭</li>
+<li>几何冲刺 Geometry Dash</li>
+<li>没技术别开车</li>
+<li>恐龙公园 Parkasaurus</li>
+<li>罗曼圣诞探案集</li>
+<li>深渊奥德赛</li>
+<li>同步音律喵塞克 MUSYNX</li>
+<li>Toren</li>
+<li>跆拳道虚拟示范团</li>
+<li>她的故事 HerStory</li>
+<li>神秘博士：孤独的暗杀者</li>
+<li>扫雷冒险谭2 露露姆的冒险</li>
+<li>原始的光</li>
+<li>意识迷宫 Neurodeck</li>
+<li>陷阵之志</li>
+<li>外星贸易公司</li>
+<li>我的英雄学院：一人的正义1</li>
+<li>我的英雄学院：一人的正义2</li>
+<li>无双全明星</li>
+<li>一生推不如一生恋</li>
+<li>致命躯壳</li>
+<li>QV</li>
+<li>人类 Humankind</li>
+<li>冰与火之舞</li>
+<li>村庄 The Village</li>
+<li>存在</li>
+<li>大衍江湖 Evolution Of JiangHu</li>
+<li>重装机兵1</li>
+<li>重装机兵2</li>
+<li>重装机兵2：改</li>
+<li>重装机兵2：重置版</li>
+<li>重装机兵3</li>
+<li>重装机兵4月光歌姬：汉化修复515</li>
+<li>重装机兵：钢之季节</li>
+<li>重装机兵：回归</li>
+<li>重装机兵4：汉化加强3版</li>
+<li>重装机兵：双红狼冷儿无敌加强版</li>
+<li>重装机兵SH BT版</li>
+<li>重装机兵Super Hack</li>
+<li>重装机兵风暴猎人 凯克</li>
+<li>重装机兵黑夜版</li>
+<li>重装机兵卡兰加强版</li>
+<li>重装机兵妮娜版</li>
+<li>重装机兵强化版</li>
+<li>重装机兵完美红狼版</li>
+<li>重装机兵野外BOSS版</li>
+<li>重装机兵之一穷二白</li>
+<li>重装机兵：最终明奇</li>
+<li>最终明奇v1.92改【红狼。沙漠之舟。戈斯战车】</li>
+<li>重装机兵2 NEX v1.27修改版</li>
+<li>重装机兵2R鲜血染红的战车最终版2.5火力变态版</li>
+<li>重装机兵3地狱门回归</li>
+<li>重装复仇者</li>
+<li>重装机兵FR同人</li>
+<li>重装机兵：进军地狱门</li>
+<li>重装机兵：梦想起飞</li>
+<li>不可思议的幻想乡</li>
+<li>不可思议的幻想乡：幻想迷宫</li>
+<li>不要喂食猴子</li>
+<li>蒂德莉特的奇境冒险</li>
+<li>开拓者正义之怒</li>
+<li>坦克维修模拟器</li>
+<li>永远消失的幻想乡</li>
+<li>宇宙模拟器 太空引擎 SpaceEngine</li>
+<li>古惑狼：三部曲：重制版</li>
+<li>古惑狼4：时机已到</li>
+<li>遗迹：灰烬重生</li>
+<li>怪物避难所</li>
+<li>打鬼PAGUI</li>
+<li>地表法则：先遣者</li>
+<li>毁灭战士：永恒</li>
+<li>控制：终极合辑</li>
+<li>军团战棋</li>
+<li>圣女战旗</li>
+<li>屋 House</li>
+<li>逃离塔科夫：单机版</li>
+<li>践踏2：超级机甲联盟</li>
+<li>沙发怪兽</li>
+<li>魔法气泡冠军</li>
+<li>魔法气泡 特趣思 俄罗斯方块2</li>
+<li>失乐园</li>
+<li>死光：导演剪辑版</li>
+<li>双人成行可单机可Steam联机</li>
+<li>哥特舰队：阿玛达2</li>
+<li>海绵宝宝：争霸比基尼海滩</li>
+<li>极乐迪斯科：最终剪辑版</li>
+<li>女巫 Noita</li>
+<li>逃出生天</li>
+<li>王国之心3</li>
+<li>西格玛理论：谍战</li>
+<li>异星迷航</li>
+<li>黑色起源</li>
+<li>暗黑地牢 Darkest Dungeon</li>
+<li>强手棋：加强版 MONOPOLY PLUS</li>
+<li>异界之上</li>
+<li>8道门：雅兰的来世冒险 8Doors</li>
+<li>永远的伊苏1</li>
+<li>永远的伊苏2</li>
+<li>伊苏3：来自伊苏的冒险者</li>
+<li>伊苏4：太阳的假面日语版</li>
+<li>伊苏5：失落的砂之都凯芬日语版</li>
+<li>伊苏6：纳比斯汀的方舟</li>
+<li>伊苏7</li>
+<li>伊苏8达娜的安魂曲</li>
+<li>伊苏9：怪人之夜</li>
+<li>伊苏：塞尔塞塔的树海</li>
+<li>伊苏：菲尔迦纳的誓约</li>
+<li>伊苏：起源</li>
+<li>大鹅模拟器 Untitled Goose Game</li>
+<li>符石守护者</li>
+<li>血牌2：浓雾</li>
+<li>整蛊白云 RainonYourParade</li>
+<li>灰烬行者：生存之旅</li>
+<li>海之呼唤</li>
+<li>超级复古战机</li>
+<li>球魂 WarriOrb</li>
+<li>王国风云2 十字军之王2</li>
+<li>王国风云3 十字军之王3</li>
+<li>神叨叨</li>
+<li>Depraved</li>
+<li>GIBZ</li>
+<li>克苏鲁异闻录</li>
+<li>恶魔之魂</li>
+<li>节奏地牢</li>
+<li>命运创世1 Fate Extella Link1</li>
+<li>命运创世2：连接 Fate EXTELLA LINK</li>
+<li>冷峻的夜</li>
+<li>赛文：旧日不再</li>
+<li>请出示文件 PapersPlease</li>
+<li>太空工程师</li>
+<li>漩涡迷雾</li>
+<li>异星深渊 Subterrain</li>
+<li>勇气与荣耀 Guts and Glory</li>
+<li>空之轨迹FC</li>
+<li>空之轨迹SC</li>
+<li>世界摩托大奖赛21</li>
+<li>英雄群侠传2</li>
+<li>全面战争：罗马重制版</li>
+<li>大千世界</li>
+<li>黄昏沉眠街</li>
+<li>卡特尔大亨</li>
+<li>流言侦探：电脑版</li>
+<li>斩妖行</li>
+<li>斩妖Raksasi</li>
+<li>奇异人生：暴风前夕4章节完整版</li>
+<li>奇异人生：全章节完整版</li>
+<li>奇异人生2：完整版</li>
+<li>天神镇</li>
+<li>暴徒猎手</li>
+<li>大唐长安</li>
+<li>东方十昊狱 Hella Dazzling Hell</li>
+<li>风信楼</li>
+<li>篝火：被遗弃的土地</li>
+<li>地狱剑术 骇厉四斩</li>
+<li>吉原彼岸花</li>
+<li>军团纪元</li>
+<li>开拓者：正义之怒</li>
+<li>往日不再</li>
+<li>百战天虫：战争武器</li>
+<li>百战天虫：终极伤害英文版</li>
+<li>狂野之心 内心狂野</li>
+<li>杀戮之源</li>
+<li>征服者的荣耀：围城</li>
+<li>装甲骑士</li>
+<li>老板,游戏凉了</li>
+<li>零世代</li>
+<li>魔能2</li>
+<li>魔王大人击退勇者吧</li>
+<li>农场经理2021</li>
+<li>审判者</li>
+<li>审判者：高清重制全章节版</li>
+<li>失落的遗迹</li>
+<li>铁道少女：梦想轨迹</li>
+<li>我的朋友佩德罗</li>
+<li>星空列车与白的旅行</li>
+<li>月风魔传不朽之月</li>
+<li>离去之前</li>
+<li>众神：解放</li>
+<li>爱人</li>
+<li>蛋蛋掌门日志</li>
+<li>黑暗科幻冒险 Lacuna</li>
+<li>基因特工 G2 Fighter</li>
+<li>精神科检验师 Mind Scanners</li>
+<li>模拟老大爷 Just Die Already</li>
+<li>再会了,黄金时代</li>
+<li>生化变种</li>
+<li>艾丽卡</li>
+<li>大厨 Chef</li>
+<li>东方栖霞园</li>
+<li>海洋之王</li>
+<li>卡西纳</li>
+<li>灵动骑士</li>
+<li>真实游戏 true game</li>
+<li>Hokko Life</li>
+<li>多啦A梦：牧场物语</li>
+<li>国家的崛起：扩展版</li>
+<li>涅克洛蒙达赏金猎人</li>
+<li>几何竞技场</li>
+<li>经典回归：魔界村</li>
+<li>前往中世纪</li>
+<li>誓死坚守</li>
+<li>铁翼少女</li>
+<li>自杀小子：豪华版</li>
+<li>最后的咒语</li>
+<li>永恒边缘</li>
+<li>暴走大鹅</li>
+<li>刀锋战神</li>
+<li>帝国霸业：银河生存</li>
+<li>一起玩农场</li>
+</ul>
+
+            </div>
+            
+              <div class="reward-btn">
+                <div class="reward-btn-text">赞赏</div>
+              </div>
+            
+            
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong class="language" data-lan="author">本文作者：</strong>
+      爱玩单机的小泰勒
+    </li>
+    <li class="post-copyright-link">
+      <strong class="language" data-lan="link">本文链接：</strong>
+      <a href="https://taylorswift134.xyz/post/GameMenu/" title="游戏目录">https://taylorswift134.xyz/post/GameMenu/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong class="language" data-lan="copyright">版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+    </div>
+    <div class="nav-next">
+      
+    </div>
+  </div>
+</div>
+            
+            
   <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
 <div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
 
@@ -363,11 +2090,11 @@
   });
 </script>
 
-              </section>
-            </div>
+          </div>
         </div>
       </div>
-      <div class="footer-box">
+    </div>
+    <div class="footer-box">
   <footer class="footer">
     <center id="runTimeBox">
       已运行:<span id="run_time"></span>
@@ -615,6 +2342,223 @@
     parent.insertBefore(aelem, next);
   });
 </script>
+    <div class="reward-mask" style="display: none;">
+  <div class="reward-relative">
+    <span class="close" aria-hidden="true">x</span>
+    <div class="reward-body">
+      <h2>感谢您的支持，我会继续努力的!</h2>
+      <div class="reward-img-box">
+        <div style="position: relative; width: 140px; height: 140px;">
+          
+          
+          
+        </div>
+      </div>
+      <p class="reward-word">扫码打赏，你说多少就多少</p>
+      <p class="reward-tip"> </p>
+    </div>
+    <div class="bottom">
+      
+      
+    </div>
+  </div>
+</div>
+<style>
+  .reward-mask {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000054;
+  }
+
+  .reward-relative {
+    position: relative;
+    width: 480px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #fff;
+    top: 50%;
+    margin-top: -205px;
+  }
+
+  .reward-relative .close {
+    position: absolute;
+    right: 10px;
+    font-weight: normal;
+    font-size: 16px;
+    color: #929292;
+  }
+
+  .reward-body {
+    padding: 40px 20px 20px;
+  }
+
+  .bottom {
+    display: flex;
+  }
+
+  .reward-btn {
+    text-align: center;
+  }
+
+  .reward-btn-text {
+    display: inline-block;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    background-color: #ff9734;
+    color: #FFF;
+    margin-top: 20px;
+  }
+
+  .pay-text {
+    margin-top: 10px;
+    padding: 10px;
+    flex: 1;
+    transition: all .2s linear;
+  }
+
+  .pay-text:hover {
+    background-color: #a5a5a536;
+  }
+
+  .reward-body h2 {
+    padding-top: 10px;
+    text-align: center;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 20px;
+  }
+
+  .reward-body h2:after,
+  .reward-body h2:before {
+    font-family: Arial, Helvetica, sans-serif;
+    background: 0 0;
+    width: 0;
+    height: 0;
+    font-style: normal;
+    color: #eee;
+    font-size: 80px;
+    position: absolute;
+    top: 20px;
+  }
+
+  .reward-body h2:before {
+    content: '\201c';
+    left: 50px;
+  }
+
+  .reward-body h2:after {
+    content: '\201d';
+    right: 80px;
+  }
+
+  .reward-img-box {
+    display: inline-block;
+    padding: 10px;
+    border: 6px solid #ea5f00;
+    margin: 0 auto;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .reward-img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .reward-relative {
+      height: 100%;
+      top: 0px;
+      margin-top: 0;
+      width: auto;
+    }
+
+    .reward-relative .bottom {
+      flex-direction: column;
+    }
+
+    .reward-relative .pay-text {
+      width: 80%;
+      margin: 5px auto;
+      border: 1px solid silver;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .reward-body h2:after {
+      right: 40px;
+    }
+
+    .reward-body h2:after,
+    .reward-body h2:before {
+      font-size: 60px;
+    }
+
+    .reward-body h2:before {
+      left: 20px;
+    }
+  }
+</style>
+<script>
+  !function () {
+    var mask = document.querySelector('.reward-mask');
+    let close = document.querySelector('.reward-relative .close');
+    let rewardBtn = document.querySelector('.reward-btn');
+
+    let zfb = document.querySelector('#zfb'),
+      wx = document.querySelector('#wx'),
+      zfbBtn = document.querySelector('#zfbBtn'),
+      wxBtn = document.querySelector('#wxBtn');
+
+    if (zfbBtn && wxBtn) {
+      zfbBtn.addEventListener('click', () => {
+        jQuery.Velocity(zfb, 'transition.slideLeftIn', {
+          duration: 400
+        });
+        jQuery.Velocity(wx, 'transition.slideRightOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+
+      wxBtn.addEventListener('click', () => {
+        jQuery.Velocity(wx, 'transition.slideRightIn', {
+          duration: 400
+        });
+        jQuery.Velocity(zfb, 'transition.slideLeftOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+    }
+
+    rewardBtn.addEventListener('click', (e) => {
+      jQuery.Velocity(mask, 'transition.slideDownIn', {
+        duration: 400
+      })
+    });
+
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      jQuery.Velocity(mask, 'transition.slideUpOut', {
+        duration: 400
+      })
+    })
+  }()
+</script>
+
   </div>
 </body>
 
@@ -2578,7 +4522,6 @@
       speed: 200
     });
   </script>
-
 
 
 
