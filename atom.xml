@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://taylorswift134.xyz</id>
     <title>TaylorBoy</title>
-    <updated>2021-12-04T16:06:32.924Z</updated>
+    <updated>2021-12-04T16:36:59.215Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://taylorswift134.xyz"/>
     <link rel="self" href="https://taylorswift134.xyz/atom.xml"/>
@@ -356,58 +356,25 @@ Red Dead Redemption 2 PC 版还提供 HDR 支持，可在高端显示设置上�
 <h1 id="配置要求">配置要求</h1>
 <p>最低配置:</p>
 <ul>
-<li>
-<p>需要 64 位处理器和操作系统</p>
-</li>
-<li>
-<p>操作系统: Windows 10 version 15063.0 or higher</p>
-</li>
-<li>
-<p>处理器: Intel i3-4170 @ 3.7Ghz OR Intel i5 750 @ 2.67Ghz</p>
-</li>
-<li>
-<p>内存: 4 GB RAM</p>
-</li>
-<li>
-<p>显卡: NVidia 650TI OR AMD R7 250x</p>
-</li>
-<li>
-<p>DirectX 版本: 12</p>
-</li>
-<li>
-<p>网络: 宽带互联网连接</p>
-</li>
-<li>
-<p>存储空间: 需要 80 GB 可用空间</p>
-</li>
-<li>
+<li>需要 64 位处理器和操作系统</li>
+<li>操作系统: Windows 10 version 15063.0 or higher</li>
+<li>处理器: Intel i3-4170 @ 3.7Ghz OR Intel i5 750 @ 2.67Ghz</li>
+<li>内存: 4 GB RAM</li>
+<li>显卡: NVidia 650TI OR AMD R7 250x</li>
+<li>DirectX 版本: 12</li>
+<li>网络: 宽带互联网连接</li>
+<li>存储空间: 需要 80 GB 可用空间</li>
+</ul>
 <p>推荐配置:</p>
-</li>
-<li></li>
-<li>
-<p>需要 64 位处理器和操作系统</p>
-</li>
-<li>
-<p>操作系统: Windows 10 version 15063.0 or higher</p>
-</li>
-<li>
-<p>处理器: Intel i7-3820 @ 3.6Ghz</p>
-</li>
-<li>
-<p>内存: 8 GB RAM</p>
-</li>
-<li>
-<p>显卡: NVidia GTX 970 OR NVidia GTX 1060 3GB OR AMD R9 290x OR AMD RX 470</p>
-</li>
-<li>
-<p>DirectX 版本: 12</p>
-</li>
-<li>
-<p>网络: 宽带互联网连接</p>
-</li>
-<li>
-<p>存储空间: 需要 100 GB 可用空间</p>
-</li>
+<ul>
+<li>需要 64 位处理器和操作系统</li>
+<li>操作系统: Windows 10 version 15063.0 or higher</li>
+<li>处理器: Intel i7-3820 @ 3.6Ghz</li>
+<li>内存: 8 GB RAM</li>
+<li>显卡: NVidia GTX 970 OR NVidia GTX 1060 3GB OR AMD R9 290x OR AMD RX 470</li>
+<li>DirectX 版本: 12</li>
+<li>网络: 宽带互联网连接</li>
+<li>存储空间: 需要 100 GB 可用空间</li>
 </ul>
 ]]></content>
     </entry>
